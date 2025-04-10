@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Produtos do Pedido" icon-name="standard:product">
+        <div class="slds-m-around_medium">
+            <template if:true={produtos}>
+                <template for:each={produtos} for:item="produto">
+                    <div key={produto.id} class="slds-box slds-theme_default slds-m-bottom_small">
+                        
+                        <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small" role="button" onclick={toggleExpand} data-id={produto.id}>
+                            <lightning-icon 
+                                icon-name={produto.iconName} 
+                                size="x-small" 
+                                alternative-text="Expandir/Colapsar"
+                                class="slds-m-right_small"
+                            ></lightning-icon>
+                            <h2 class="slds-text-heading_small">{produto.nome}</h2>
+                        </div>
+
+                        <template if:true={produto.expanded}>
+                            <template if:true={produto.componentes.length}>
+                                <ul class="slds-list_dotted slds-m-left_medium slds-text-body_regular">
+                                    <template for:each={produto.componentes} for:item="componente">
+                                        <li key={componente.id}>
+                                            <strong>{componente.nome}</strong> — {componente.quantidade} x R${componente.preco}
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                            <template if:false={produto.componentes.length}>
+                                <p class="slds-text-color_weak">Sem componentes.</p>
+                            </template>
+                        </template>
+
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={erro}>
+                <div class="slds-text-color_error slds-m-top_medium">
+                    Erro ao carregar os dados: {erro.body.message}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

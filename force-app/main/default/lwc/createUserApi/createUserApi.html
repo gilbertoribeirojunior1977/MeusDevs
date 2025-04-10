@@ -1,0 +1,42 @@
+<template>
+  <lightning-card title="Criar Usuário (via Apex)" icon-name="standard:user">
+    <div class="slds-p-around_medium">
+      <lightning-input label="Nome" value={nome} onchange={handleNomeChange} class="slds-m-bottom_small"></lightning-input>
+      <lightning-input label="Cargo (Job)" value={job} onchange={handleJobChange} class="slds-m-bottom_medium"></lightning-input>
+
+      <lightning-button 
+        label="Enviar" 
+        variant="brand" 
+        icon-name="utility:send"
+        onclick={enviarDados}
+        disabled={carregando}
+        class="slds-m-bottom_medium"
+      ></lightning-button>
+
+      <template if:true={carregando}>
+        <lightning-spinner alternative-text="Enviando..." size="medium"></lightning-spinner>
+      </template>
+
+      <template if:true={resposta}>
+        <div class="slds-box slds-theme_alert-texture slds-theme_success slds-m-top_medium">
+          <div class="slds-media">
+            <lightning-icon icon-name="utility:success" size="small" class="slds-m-right_small"></lightning-icon>
+            <div class="slds-media__body">
+              <p><strong>ID:</strong> {resposta.id}</p>
+              <p><strong>Nome:</strong> {resposta.name}</p>
+              <p><strong>Cargo:</strong> {resposta.job}</p>
+              <p><strong>Criado em:</strong> {resposta.createdAt}</p>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template if:true={erro}>
+        <div class="slds-box slds-theme_alert-texture slds-theme_error slds-m-top_medium">
+          <lightning-icon icon-name="utility:error" size="small" class="slds-m-right_small"></lightning-icon>
+          <span><strong>Erro:</strong> {erro}</span>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>

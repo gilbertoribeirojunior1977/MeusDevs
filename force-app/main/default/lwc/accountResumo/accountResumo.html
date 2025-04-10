@@ -1,0 +1,51 @@
+<template>
+    <div class="resumo-container slds-box slds-theme_default">
+        
+        <!-- Info da Conta -->
+        <template if:true={account}>
+            <div class="header">
+                <lightning-icon icon-name="standard:account" size="small"></lightning-icon>
+                <h2>Resumo do Cliente</h2>
+            </div>
+    
+            <div class="info-grid">
+                <p><strong>Nome:</strong> {account.Name.value}</p>
+                <p><strong>Tipo:</strong> {account.Type.value}</p>
+                <p><strong>Segmento:</strong> {account.SegmentacaoCliente__c.value}</p>
+                <p><strong>Última Modificação:</strong> {account.LastModifiedDate.value}</p>
+            </div>
+        </template>
+        
+        
+
+        <hr class="divider" />
+        <h3 class="section-title">Últimos Pedidos</h3>
+        <div class="cards-grid">
+            <template for:each={pedidos} for:item="pedido">
+                <div key={pedido.Id} class="card">
+                    <p><strong>Número: </strong>
+                        <a href="javascript:void(0);" data-id={pedido.Id} onclick={handlePedidoClick}>
+                            {pedido.OrderNumber}
+                        </a>
+                    </p>
+                    <p><strong>Data:</strong> {pedido.EffectiveDate}</p>
+                    <p><strong>Status:</strong> {pedido.Status}</p>
+                    <p><strong>Total:</strong> R$ {pedido.TotalAmount}</p>
+                </div>
+            </template>
+        </div>
+
+        <hr class="divider" />
+
+        <h3 class="section-title">Atividades Recentes</h3>
+        <div class="cards-grid">
+            <template for:each={atividades} for:item="atividade">
+                <div key={atividade.id} class="card">
+                    <p><strong>Data:</strong> {atividade.dataAtividade}</p>
+                    <p><strong>Assunto:</strong> {atividade.assunto}</p>
+                    <p><strong>Status:</strong> {atividade.status}</p>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

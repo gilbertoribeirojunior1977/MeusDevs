@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Contas com Contatos" icon-name="standard:account">
+        <div class="slds-m-around_medium">
+            <template if:true={contas}>
+                <template for:each={contas} for:item="conta">
+                    <div key={conta.id} class="slds-card slds-m-bottom_small slds-p-around_medium slds-box slds-theme_default">
+                        <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                            <h2 class="slds-text-heading_small">{conta.nome}</h2>
+                            <lightning-button-icon
+                                icon-name={conta.iconName}
+                                alternative-text="Expandir/Colapsar"
+                                onclick={toggleExpand}
+                                data-id={conta.id}
+                                variant="bare"
+                                class="slds-m-left_small">
+                            </lightning-button-icon>
+                        </div>
+
+                        <template if:true={conta.expanded}>
+                            <template if:true={conta.contatos.length}>
+                                <ul class="slds-list_dotted slds-m-left_medium">
+                                    <template for:each={conta.contatos} for:item="contato">
+                                        <li key={contato.id}>
+                                            <strong>{contato.nome}</strong> — {contato.email} | {contato.telefone}
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                            <template if:false={conta.contatos.length}>
+                                <p class="slds-text-color_weak">Sem contatos.</p>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+            </template>
+            <template if:true={erro}>
+                <div class="slds-text-color_error slds-m-top_medium">
+                    Erro ao carregar os dados: {erro.body.message}
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
